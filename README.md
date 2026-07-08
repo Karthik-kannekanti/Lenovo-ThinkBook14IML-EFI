@@ -47,18 +47,49 @@ An [OpenCore](https://github.com/acidanthera/OpenCorePkg) EFI configuration for 
 - Wi-Fi/Bluetooth are not supported without swapping the wireless card.
 - USB port mapping is not finalized for this chassis.
 
-## ⚠️ Before you boot this on your own machine
+## ⚠️ Before you boot this on your own machine — replace these values
 
 This EFI's `config.plist` currently contains **this author's own `PlatformInfo` identity values** (`SystemSerialNumber`, `MLB`, `SystemUUID`, `ROM`). **Do not use these as-is if you plan to sign in to iMessage, FaceTime, or iCloud** — using a duplicate/shared serial can cause Apple to flag or ban the associated services for everyone using the same values.
 
-Before relying on this for daily use, generate your own unique set with [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS) or `macserial`, and replace the values in `EFI/OC/config.plist` under `PlatformInfo → Generic`.
+### What needs to be replaced
+
+In `EFI/OC/config.plist`, under `PlatformInfo → Generic`:
+
+| Key | What it is |
+|---|---|
+| `SystemSerialNumber` | The Mac's serial number |
+| `MLB` | Logic board serial ("Main Logic Board") |
+| `SystemUUID` | Hardware UUID |
+| `ROM` | MAC address used to derive your iMessage/FaceTime device identity |
+
+### How to replace them
+
+1. **Download [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)** (works on macOS; run it from a working Hackintosh, VM, or a real Mac).
+2. Run `GenSMBIOS.command` → choose **1. SMBIOS/macserial** → generate a new set for model **`MacBookPro16,2`** (must match the model already set in this config so patches stay valid).
+3. It prints fresh values for `Serial Number`, `Board Serial Number (MLB)`, `SmUUID (SystemUUID)`, and a `ROM`/MAC value.
+4. Open `EFI/OC/config.plist` with [ProperTree](https://github.com/corpnewt/ProperTree) (do **not** edit OpenCore plists with Xcode or a generic text editor — ProperTree understands the binary/data types OpenCore expects).
+5. Navigate to `PlatformInfo → Generic` and paste in your 4 new values, replacing the existing ones.
+6. Save, and copy the updated `config.plist` back onto your EFI partition.
+
+Skip this step only if you're just testing in a VM or don't intend to use any Apple services on the install.
 
 ## Installation
 
+### Normal install (macOS as the only/primary OS)
+
 1. Download the latest EFI from the [Releases](../../releases) page (or use the "Code → Download ZIP" button above for the full repo).
-2. Generate your own serial/MLB/UUID (see warning above) before first real-world use.
+2. Generate your own serial/MLB/UUID (see above) before first real-world use.
 3. Copy the `EFI` folder to the EFI system partition of your boot USB/drive.
 4. Boot from the USB via your BIOS boot menu and install macOS per standard OpenCore install guides (see [Dortania's OpenCore Install Guide](https://dortania.github.io/OpenCore-Install-Guide/)).
+
+### Dual boot with Windows
+
+This EFI is configured to support dual boot out of the box: `ScanPolicy` is set to `0` (unrestricted — scans and lists every bootable OS it finds, including Windows Boot Manager) and the OpenCore picker (`OpenCanopy`) is enabled with `HideAuxiliary: true`, which only hides internal tool entries (Reset NVRAM, UEFI Shell), never a real OS entry. In practice:
+
+- **Windows stays exactly where it is.** OpenCore doesn't touch your existing Windows install; it just adds itself as another boot option and lists Windows Boot Manager alongside macOS in its picker at every boot.
+- **Because the internal Micron NVMe SSD isn't supported yet (see [Known limitations](#known-limitations-v100)), install macOS to a separate drive** — typically an external USB3 SSD/enclosure, or an internal 2.5" SATA bay if your chassis has one free. Leave the internal NVMe drive (with Windows) untouched.
+- At boot, hold the boot-menu key for your firmware (usually **F12**/**F2** on Lenovo) once, pick the EFI/USB containing this OpenCore build, and you'll get a picker listing both **Windows** and **macOS** — pick per boot, no bcdedit/rEFInd tricks needed.
+- Once NVMe support lands in `v2.0.0`, true same-drive dual boot (a second partition on the internal SSD, next to Windows) becomes practical too.
 
 ## Kexts / drivers included
 
