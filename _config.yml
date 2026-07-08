@@ -1,4 +1,4 @@
-title: Lenovo ThinkBook 14-IML OpenCore EFI for macOS Sequoia
+title: Lenovo ThinkBook 14-IML (Type 20RV) — OpenCore EFI for macOS
 description: >-
   OpenCore EFI configuration for running macOS Sequoia on the Lenovo ThinkBook
   14-IML (Type 20RV) Hackintosh, including kexts, drivers, ACPI patches,
