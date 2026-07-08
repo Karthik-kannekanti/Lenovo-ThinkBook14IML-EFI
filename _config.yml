@@ -1,0 +1,23 @@
+title: Lenovo ThinkBook 14-IML OpenCore EFI for macOS Sequoia
+description: >-
+  OpenCore EFI configuration for running macOS Sequoia on the Lenovo ThinkBook
+  14-IML (Type 20RV) Hackintosh, including kexts, drivers, ACPI patches,
+  hardware compatibility table, and known limitations.
+url: "https://karthik-kannekanti.github.io"
+baseurl: "/Lenovo-ThinkBook14IML-EFI"
+lang: en_US
+author: Karthik-kannekanti
+github_username: Karthik-kannekanti
+repository: Karthik-kannekanti/Lenovo-ThinkBook14IML-EFI
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+keywords:
+  - OpenCore
+  - Hackintosh
+  - macOS Sequoia
+  - Lenovo ThinkBook 14-IML
+  - EFI
+  - UEFI bootloader
+  - macOS on Lenovo

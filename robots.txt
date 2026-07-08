@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://karthik-kannekanti.github.io/Lenovo-ThinkBook14IML-EFI/sitemap.xml
