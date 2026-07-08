@@ -1,3 +1,8 @@
+---
+title: "Lenovo ThinkBook 14-IML (Type 20RV) — OpenCore EFI for macOS"
+description: "OpenCore EFI for macOS Sequoia on the Lenovo ThinkBook 14-IML (20RV) Hackintosh — kexts, drivers, ACPI patches, and hardware compatibility notes."
+---
+
 # Lenovo ThinkBook 14-IML (Type 20RV) — OpenCore EFI for macOS
 
 An [OpenCore](https://github.com/acidanthera/OpenCorePkg) EFI configuration for running macOS on the **Lenovo ThinkBook 14-IML (Type 20RV)**, targeting SMBIOS `MacBookPro16,2`.
